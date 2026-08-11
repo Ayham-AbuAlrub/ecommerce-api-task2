@@ -1,105 +1,42 @@
-# E-Commerce REST API
+# E-commerce REST API – Task 3
 
-A RESTful API for an E-Commerce system built using Node.js, Express.js, and PostgreSQL.
+## Security Features
 
-## Technologies Used
+- JWT Authentication
+- Role-Based Authorization (Admin / Customer)
+- Password Hashing using bcrypt
+- Input Validation using Zod
+- SQL Injection Protection (Parameterized Queries)
+- Helmet Security Headers
+- CORS Configuration
+- Rate Limiting
+- Centralized Error Handling
+- IDOR Protection
+- Environment Variables (.env)
+
+## Technologies
 
 - Node.js
 - Express.js
-- PostgreSQL
-- Neon PostgreSQL
-- Postman
-- Nodemon
-- dotenv
-- CORS
+- PostgreSQL (Neon)
+- bcrypt
+- jsonwebtoken
+- helmet
+- express-rate-limit
+- zod
 
-## Project Structure
+## Run
 
-src/
-- config/
-  - database.js
-- controllers/
-  - productsController.js
-  - categoriesController.js
-  - usersController.js
-- middleware/
-  - errorHandler.js
-- routes/
-  - productsRoutes.js
-  - categoriesRoutes.js
-  - usersRoutes.js
-- app.js
-- server.js
-
-## Installation
-
-Install the project dependencies:
-
+```bash
 npm install
-
-Create a `.env` file and configure the required environment variables.
-
-Example:
-
-DATABASE_URL=your_database_connection_string
-PORT=3000
-
-Start the development server:
-
 npm run dev
+```
 
-The server runs on:
+## Environment Variables
 
-http://localhost:3000
-
-## API Endpoints
-
-### Products
-
-- GET /api/products
-- GET /api/products/:id
-- POST /api/products
-- PUT /api/products/:id
-- PATCH /api/products/:id/status
-
-### Categories
-
-- GET /api/categories
-- GET /api/categories/:id
-- POST /api/categories
-- PUT /api/categories/:id
-
-### Users
-
-- GET /api/users
-- GET /api/users/:id
-- POST /api/users
-- PATCH /api/users/:id/status
-
-## Features
-
-- PostgreSQL database connection using environment variables
-- Parameterized SQL queries
-- Product management
-- Category management
-- User management
-- Input validation
-- Proper HTTP status codes
-- JSON responses
-- Duplicate email handling
-- Invalid ID handling
-- Unknown route handling
-- Centralized error handling
-- Postman API testing
-
-## Security
-
-Sensitive environment variables are stored in `.env`.
-
-The `.env` file is excluded from Git using `.gitignore`.
-
-An `.env.example` file is included as a template without real credentials.
-
-## Author
-
-Ayham Abu Alrub
+```
+PORT=
+DATABASE_URL=
+JWT_SECRET=
+JWT_EXPIRES_IN=
+```

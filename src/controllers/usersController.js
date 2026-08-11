@@ -1,4 +1,5 @@
 const pool = require("../config/database");
+const bcrypt = require("bcrypt");
 
 // GET all users
 const getUsers = async (req, res) => {
@@ -31,7 +32,15 @@ const getUserById = async (req, res) => {
     if (!Number.isInteger(userId) || userId <= 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid user ID"
+        message: "Invalid user ID",
+      });
+    }
+
+    // IDOR Protection
+    if (req.user.role !== "admin" && req.user.id !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
       });
     }
 
@@ -45,20 +54,20 @@ const getUserById = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "User not found"
+        message: "User not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      data: result.rows[0]
+      data: result.rows[0],
     });
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve user"
+      message: "Failed to retrieve user",
     });
   }
 };
@@ -70,16 +79,11 @@ const createUser = async (req, res) => {
       full_name,
       email,
       phone,
-      hash_password,
+      password,
       role
     } = req.body;
 
-    if (!full_name || !email || !hash_password) {
-      return res.status(400).json({
-        success: false,
-        message: "full_name, email and hash_password are required"
-      });
-    }
+    const hash_password = await bcrypt.hash(password, 12);
 
     const result = await pool.query(
       `INSERT INTO users
